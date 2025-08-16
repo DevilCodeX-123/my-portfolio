@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', monospace;
+    background-color: #0f0f0f;
+    color: #00ff00;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #111;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+nav a {
+    color: #00ff00;
+    margin: 0 15px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff;
+}
+
+main {
+    padding: 50px 20px;
+}
+
+h1, h2, h3 {
+    text-shadow: 0 0 10px #0ff;
+}
+
+ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+a {
+    color: #00ff00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #111;
+    color: #00ff00;
+    border: 2px solid #00ff00;
+    transition: 0.3s;
+}
+
+button:hover {
+    color: #0ff;
+    border-color: #0ff;
+    box-shadow: 0 0 10px #0ff;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #111;
+    box-shadow: 0 -2px 10px #00ff00;
+}
+
+.hero, .about, .services, .contact {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+.highlights ul {
+    list-style: none;
+    padding: 0;
+}
+
+.highlights li {
+    margin: 10px 0;
+    font-weight: bold;
+    text-shadow: 0 0 5px #0ff;
+}
