@@ -1,66 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Dev Portfolio</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devill KK - Full Stack Developer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background: #0a0a0a;
+        }
+
+        /* Dark Galaxy Background with Stars */
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at bottom, #1a0a2e 0%, #0a0a0a 70%),
+                radial-gradient(ellipse at top, #0d1117 0%, #0a0a0a 70%),
+                radial-gradient(ellipse 60% 40% at 30% 50%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 70% 30%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 80%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+            z-index: -2;
+            animation: galaxyFloat 120s ease-in-out infinite;
+        }
+
+        /* Animated Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        /* Layered stars with different sizes, opacities, and positions */
+        .star:nth-child(1) { width: 3px; height: 3px; top: 20%; left: 10%; animation-delay: 0s; }
+        .star:nth-child(2) { width: 1.5px; height: 1.5px; top: 50%; left: 20%; animation-delay: 0.5s; }
+        .star:nth-child(3) { width: 5px; height: 5px; top: 70%; left: 80%; animation-delay: 1s; }
+        .star:nth-child(4) { width: 2px; height: 2px; top: 30%; left: 60%; animation-delay: 1.5s; }
+        .star:nth-child(5) { width: 4px; height: 4px; top: 80%; left: 30%; animation-delay: 0.2s; }
+        .star:nth-child(6) { width: 1px; height: 1px; top: 10%; left: 70%; animation-delay: 0.8s; }
+        .star:nth-child(7) { width: 3px; height: 3px; top: 40%; left: 5%; animation-delay: 1.2s; }
+        .star:nth-child(8) { width: 2px; height: 2px; top: 90%; left: 90%; animation-delay: 0.4s; }
+        
+        /* Nebula/Glow effect */
+        .nebula {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: nebula 200s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.5); }
+        }
+
+        @keyframes galaxyFloat {
+            0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+            33% { transform: translateX(-2%) translateY(-1%) scale(1.02); }
+            66% { transform: translateX(1%) translateY(-0.5%) scale(1.01); }
+        }
+
+        @keyframes nebula {
+            0% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+            100% { opacity: 0.2; transform: scale(1); }
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            background: radial-gradient(circle at 30% 30%, #00d4ff, transparent 50%);
+            transition: all 0.1s ease;
+            mix-blend-mode: screen;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 5% 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #00d4ff, #ffffff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 4rem;
+            color: #00d4ff;
+            text-align: center;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            gap: 2rem;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            opacity: 0.9;
+            margin: 0 auto;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 212, 255, 0.6);
+        }
+
+        /* Skills - Single Line Horizontal Layout */
+        .skills-container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1.5rem;
+            width: 100%;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .skills-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .skill-card {
+            flex: 0 0 280px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(15px);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            background: rgba(0, 212, 255, 0.15);
+            border-color: #00d4ff;
+            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Projects - Single Line Horizontal Layout */
+        .projects-container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 1.5rem;
+            width: 100%;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .projects-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .project-card {
+            flex: 0 0 380px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(15px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-20px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 212, 255, 0.4);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc, #00d4ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #00d4ff;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2.5rem;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(15px);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            background: rgba(0, 212, 255, 0.15);
+            border-color: #00d4ff;
+            box-shadow: 0 25px 50px rgba(0, 212, 255, 0.3);
+        }
+
+        .contact-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            color: #00d4ff;
+        }
+
+        .contact-card:hover .contact-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .skills-container,
+            .projects-container {
+                gap: 1rem;
+            }
+            
+            .skill-card {
+                flex: 0 0 250px;
+            }
+            
+            .project-card {
+                flex: 0 0 320px;
+            }
+        }
+
+        @media (max-width: 480px) {
+/* Hover Effect - Smooth, Gradient, and Subtle */
+.hover-effect {
+    position: relative;
+    display: inline-block;
+    padding: 10px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    color: #fff;
+    background: #121212;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: all 0.4s ease;
+}
+
+.hover-effect::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff00d5, #00ffd5, #0077ff);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 50px;
+}
+
+.hover-effect:hover::before {
+    opacity: 1;
+}
+
+.hover-effect:hover {
+    transform: scale(1.05);
+    color: #fff;
+    border-color: #00ffd5;
+}
+            }
+
+           /* Ensure project image takes full width and is placed above content */
+.project-card {
+    display: flex;
+    flex-direction: column; /* Stack image and content vertically */
+    border-radius: 10px;
+    background-color: #121212;
+    margin: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* For the images inside each project card */
+.project-image img {
+    width: 100%; /* Make image fill the width of the container */
+    height: 100%; /* Set height to fully fill the area */
+    object-fit: cover; /* Ensure image covers the area without distortion */
+    border-bottom: 2px solid #00ffd5; /* Blue border */
+}
+
+/* Styling for the content below the image */
+.project-content {
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column; /* Stack image and content vertically */
+    border-radius: 10px;
+    background-color: #121212;
+    margin: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* Adjust the hover effect */
+.project-card:hover .project-image {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.6); /* Blue shadow on hover */
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 0.6rem 1.8rem;
+    font-size: 1rem;
+    background-color: #00ffd5;
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #0077ff;
+}
+
+.project-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00ffd5;
+    margin-bottom: 10px;
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 0.6rem 1.8rem;
+    font-size: 1rem;
+    background-color: #00ffd5;
+    color: #fff;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #0077ff;
+}
+    </style>
 </head>
 <body>
-<header>
-    <h1>Welcome to My Dev World</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="services.html">Projects</a>
-        <a href="contact.html">Contact</a>
+    <!-- Dark Galaxy + Stars Background -->
+    <div class="galaxy-bg"></div>
+    <div class="stars">
+        <div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div><div class="star"></div>
+        <div class="star"></div><div class="star"></div>
+    </div>
+    <div class="nebula"></div>
+    <div class="overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Devill KK</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
     </nav>
-</header>
 
-<main>
-<section class="hero">
-    <h2>Hi, I am a Web Developer</h2>
-    <p>I design and build modern websites with a hacker mindset. Fast, secure, and visually striking – perfect for startups, freelancers, or anyone looking to make an impact online.</p>
-    
-    <ul class="highlights">
-        <li>⚡ Optimized & High-Performance Websites</li>
-        <li>🛡️ Secure & Reliable Coding Practices</li>
-        <li>💻 Hacker / Developer Aesthetic & Neon Look</li>
-        <li>📱 Fully Responsive & Mobile-Friendly</li>
-    </ul>
-    
-    <button onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=bossdevil817@gmail.com&su=Website Inquiry&body=Hello, I want to discuss a website project.','_blank')">Contact Me</button>
-    <button onclick="window.location.href='#projects'">View Projects</button>
-</section>
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <h1>Devill KK</h1>
+        <p>Full Stack Developer crafting stellar digital experiences with cutting-edge technologies</p>
+        <a href="#contact" class="cta-btn">Work With Me</a>
+    </section>
 
-<section id="projects" class="features">
-    <h3>Mini Portfolio Showcase</h3>
-    <div class="project-cards">
-        <div class="card">
-            <h4>Portfolio Website</h4>
-            <p>Hacker vibe, neon aesthetics, responsive layout.</p>
+    <!-- Skills - Horizontal Single Line -->
+    <section id="skills">
+        <h2>Tech Stack</h2>
+        <div class="skills-container">
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                <h3>HTML5</h3>
+                <p>Semantic & accessible markup</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                <h3>CSS3</h3>
+                <p>Animations & responsive design</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-js-square"></i></div>
+                <h3>JavaScript</h3>
+                <p>ES6+ & modern frameworks</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-react"></i></div>
+                <h3>React.js</h3>
+                <p>Component architecture</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-node-js"></i></div>
+                <h3>Node.js</h3>
+                <p>Backend & APIs</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
+                <h3>Git</h3>
+                <p>Version control</p>
+            </div>
         </div>
-        <div class="card">
-            <h4>Landing Page</h4>
-            <p>Startup showcase with animations and modern UI.</p>
+    </section>
+
+ <section id="projects">
+    <h2>Featured Projects</h2>
+    <div class="projects-container">
+        <!-- Project 1: College-Hub -->
+        <div class="project-card">
+            <div class="project-image">
+                <img src="clg-hub.png" alt="College-Hub">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">College-Hub</h3>
+                <p>A website for the college environment</p>
+                <a href="https://college-hub-amber.vercel.app/" class="cta-btn" target="_blank">Live Demo</a>
+            </div>
         </div>
-        <div class="card">
-            <h4>Interactive Tools</h4>
-            <p>JavaScript based utilities with clean code and fast performance.</p>
+        <!-- Project 2: Yatra Setu -->
+        <div class="project-card">
+            <div class="project-image">
+                <img src="yatra-setu.png" alt="Yatra Setu">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">Yatra Setu</h3>
+                <p>Optimized travel app with real-time tracking and bookings</p>
+                <a href="https://yatra-setu-connect.vercel.app/" class="cta-btn" target="_blank">Live Demo</a>
+            </div>
+        </div>
+        <!-- Project 3: Campus Crush -->
+        <div class="project-card">
+            <div class="project-image">
+                <img src="clg-crush.png" alt="Campus Crush">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">Campus Crush</h3>
+                <p>Anonymous social platform for sharing campus feelings</p>
+                <a href="https://college-crush-mu.vercel.app/" class="cta-btn" target="_blank">Live Demo</a>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="about-preview">
-    <h3>About Me</h3>
-    <p>Passionate web developer with a hacker mindset. I focus on clean code, neon designs, and creating websites that look futuristic while being fast and secure.</p>
-</section>
-</main>
+    <!-- Contact -->
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <h3>Email Me</h3>
+                <p>bossdevil817@gmail.com</p>
+                <a href="mailto:bossdevil817@gmail.com" style="color:#00d4ff;font-weight:bold;">Send Message</a>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
+                <h3>LinkedIn</h3>
+                <p>Professional Network</p>
+                <a href="https://in.linkedin.com/in/krish-kasana-3069403a6" target="_blank" style="color:#00d4ff;font-weight:bold;">Connect Now</a>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3>Location</h3>
+                <p>Kota , Rajasthan ,India</p>
+                <p>Available for remote work worldwide 🌍</p>
+            </div>
+        </div>
+    </section>
 
-<footer>
-    &copy; 2025 My Dev Portfolio | Contact: 
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=devilcodex@gmail.com&su=Website Inquiry&body=Hello, I want to discuss a website project." target="_blank">Email Me</a>
-</footer>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Devil KK. Built with <i class="fas fa-heart" style="color:#ff4757;"></i> & 
+           <i class="fab fa-react" style="color:#00d4ff;"></i> | 
+           <a href="mailto:bossdevil817@gmail.com" style="color:#00d4ff;">bossdevil817@gmail.com</a>
+        </p>
+    </footer>
+
+    <script>
+        // Custom Cursor Tracking
+const cursor = document.querySelector('.custom-cursor');
+
+// Get all the elements that you want the cursor to interact with
+const hoverElements = document.querySelectorAll('a, .cta-btn, .skill-card, .project-card, .contact-card'); // Modify this list as needed
+
+// Add event listeners for mouse enter and mouse leave to apply/remove the 'hover' class
+hoverElements.forEach(element => {
+    element.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');  // Add hover effect to cursor
+    });
+
+    element.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');  // Remove hover effect when the cursor leaves
+    });
+});
+
+// Mousemove event to update the custom cursor position
+document.addEventListener('mousemove', (e) => {
+    cursor.style.left = (e.clientX - cursor.offsetWidth / 2) + 'px';
+    cursor.style.top = (e.clientY - cursor.offsetHeight / 2) + 'px';
+});
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+                navbar.style.backdropFilter = 'blur(25px)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0) scale(1)';
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe cards
+        document.querySelectorAll('.skill-card, .project-card, .contact-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) scale(0.9)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Horizontal scroll snap for skills & projects
+        document.querySelectorAll('.skills-container, .projects-container').forEach(container => {
+            container.style.scrollSnapType = 'x mandatory';
+        });
+
+        document.querySelectorAll('.skill-card, .project-card').forEach(card => {
+            card.style.scrollSnapAlign = 'start';
+        });
+
+        // Mouse follow parallax for hero
+        window.addEventListener('mousemove', (e) => {
+            const hero = document.querySelector('.hero');
+            const x = (e.clientX / window.innerWidth) * 10;
+            const y = (e.clientY / window.innerHeight) * 10;
+            hero.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        console.log('🚀 Dark Starry Portfolio Loaded!');
+    </script>
 </body>
 </html>
-
